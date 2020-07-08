@@ -7,33 +7,31 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="row">
-                                <?php foreach ($data['form'] as $isi): ?>
+                                 <?php foreach ($data['form'] as $isi): ?>
                                 <?php include $komponen . '/Input.php';?>
                                 <?php endforeach;?>
+
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="card-footer text-right">
-                    <input type="hidden" name="table" value="pengguna">
-                    <input type="hidden" name="input[]" value="Dinsos">
-                    <input type="hidden" name="tb[]" value="jenis">
+                    <input type="hidden" name="table" value="kecamatan">
                     <?php if (!isset($Request->key)): ?>
                     <button type="submit" name="aksi" value="insert" class="btn btn-sm  btn-primary">Tambah</button>
                     <?php else: ?>
                     <input type="hidden" name="key" value="<?php echo $Request->key; ?>">
-                    <input type="hidden" name="primary" value="idpengguna">
+                    <input type="hidden" name="primary" value="idkecamatan">
                     <input type="hidden" name="link" value="<?php echo $hal; ?>">
-
                     <button type="submit" name="aksi" value="update" class="btn btn-sm  btn-info">Edit</button>
                     <button type="submit" name="aksi" value="delete" class="btn btn-sm  btn-danger">Hapus</button>
-                    <a  href="Dinsos" class="btn btn-sm  btn-warning">Kembali</a>
+                    <a href="User" class="btn btn-sm  btn-warning">Kembali</a>
                     <?php endif;?>
                 </div>
             </form>
         </div>
     </div>
-    <div class="  col-8 mb-5">
+    <div class=" col-8 mb-5">
         <div class="card rounded shadow" style="zoom:85%">
             <h5 class="text-dark ml-2 text-center mt-1 pt-1">Tabel Data</h5>
             <table width="100%" class="text-wrap mb-0 tb table table-borderless table-striped table-hover ">
@@ -47,7 +45,6 @@
                         </th>
                         <?php endif;?>
                         <?php endforeach;?>
-
                         <th data-priority="1"></th>
                     </tr>
                 </thead>
@@ -70,9 +67,8 @@
                         </td>
                         <?php endif;?>
                         <?php endforeach;?>
-
                         <td class="text-right ">
-                            <a href="?key=<?php echo $k->idpengguna; ?>" class="btn btn-warning btn-sm">Kelola</a>
+                            <a href="?key=<?php echo $k->idkecamatan; ?>" class="btn btn-warning btn-sm">Kelola</a>
                         </td>
                     </tr>
                     <?php endforeach;?>

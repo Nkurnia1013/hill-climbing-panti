@@ -30,9 +30,8 @@ $hal = $hal[0];
 if ($hal == '') {
     echo "<script>location.href = 'Home';</script>";
 }
-$free = ['Login', 'Logout'];
-$admin = ['Dinsos', 'Kelurahan', 'Pengaturan', 'Home'];
-$Kelurahan = ['Home', 'Keluarga'];
+$free = ['Login', 'Logout', 'Home'];
+$admin = ['User'];
 
 if (!in_array($hal, $free)) {
 
@@ -41,33 +40,15 @@ if (!in_array($hal, $free)) {
         echo "<script>location.href = 'Login';</script>";
     }
 }
-if (in_array($hal, $admin)) {
 
-    if ($Session['admin']->jenis != 'Dinsos') {
-        $link = $_SERVER['HTTP_REFERER'];
-
-        echo "<script>alert('Anda tidak memiliki hak untuk mengakses halaman ini');</script>";
-        echo "<script>location.href = '$link ';</script>";
-    }
-}
-if (in_array($hal, $Kelurahan)) {
-
-    if ($Session['admin']->jenis != 'Kelurahan') {
-        $link = $_SERVER['HTTP_REFERER'];
-
-        echo "<script>alert('Anda tidak memiliki hak untuk mengakses halaman ini');</script>";
-        echo "<script>location.href = '$link ';</script>";
-    }
-}
 $route = [
     'Login' => ['class' => "app\Standalone", '@' => 'Login'],
     'Logout' => ['class' => "app\Standalone", '@' => 'Logout'],
     'Home' => ['class' => "app\Standalone", '@' => 'Home'],
-    'Dinsos' => ['class' => "app\Admin", '@' => 'Dinsos'],
-    'Kelurahan' => ['class' => "app\Admin", '@' => 'Kelurahan'],
-    'Pengaturan' => ['class' => "app\Admin", '@' => 'Pengaturan'],
-    'Data-Pengguna' => ['class' => "app\Admin", '@' => 'Pengguna'],
-    'Keluarga' => ['class' => "app\Standalone", '@' => 'Keluarga'],
+    'Dashboard' => ['class' => "app\Admin", '@' => 'Dashboard'],
+    'User' => ['class' => "app\Admin", '@' => 'User'],
+    'Kecamatan' => ['class' => "app\Admin", '@' => 'Kecamatan'],
+    'Panti' => ['class' => "app\Admin", '@' => 'Panti'],
 
 ];
 

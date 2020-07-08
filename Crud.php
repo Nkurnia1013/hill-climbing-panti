@@ -8,7 +8,7 @@ class Crud
     private static $_instance = null;
     public $mysqli;
     public $mysqli2;
-    public $dbname = '2020_june_smart';
+    public $dbname = '2020_juli_ririn';
 
     public $result;
     public function __construct()

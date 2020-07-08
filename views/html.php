@@ -2,100 +2,88 @@
 <html lang="en">
 <?php include 'head.php';?>
 
-<body style="background-image: url('mine/bg/blue.png');background-size: 100%">
-    <div class="container-fluid " style="padding-right: 8vw;padding-left: 8vw;padding-top: 10vh;padding-bottom: 10vh">
-        <div class="row  align-items-center " >
+<body style="background-image: url('mine/bg/bg 1.jpg');background-size: 100%">
+    <div class="container-fluid" style="padding-right: 8vw;padding-left: 8vw;padding-top: 10vh;padding-bottom: 10vh">
+        <div class="row">
             <?php if (isset($Session['admin'])): ?>
-            <div class="col-12">
-                <div class="d-flex  border-primary border rounded" id="wrapper">
-                    <!-- Sidebar -->
-                    <?php include 'sidebar.php';?>
-                    <!-- /#sidebar-wrapper -->
-                    <!-- Page Content -->
-                    <div id="page-content-wrapper" class="bg-white">
-                        <?php include 'navbar.php';?>
-                        <div class="container-fluid">
-                            <h4 class="mt-4"><?php echo $data['judul']; ?></h4>
-                            <hr>
-                            <?php include 'Pages/' . $data['path'] . ".php";?>
-                        </div>
+            <div class="col-3">
+                <div class="card rounded" style="zoom:85%">
+                    <div class="card-header">
+                        Menu
                     </div>
-                    <!-- /#page-content-wrapper -->
+                    <ul class="list-group list-group-flush">
+                        <a href="Dashboard" class=" list-group-item  list-group-item-action  <?php if ($data['link'] == 'Dashboard'): ?> active <?php endif;?>"><i class="fa fa-home"></i> Dashboard</a>
+                        <a href="Panti" class=" list-group-item  list-group-item-action  <?php if ($data['link'] == 'Panti'): ?> active <?php endif;?>"><i class="fa fa-place-of-worship"></i> Panti</a>
+                        <a href="Kecamatan" class=" list-group-item  list-group-item-action  <?php if ($data['link'] == 'Kecamatan'): ?> active <?php endif;?>"><i class="fa fa-map-signs"></i> Kecamatan</a>
+                        <a href="User" class=" list-group-item  list-group-item-action  <?php if ($data['link'] == 'User'): ?> active <?php endif;?>"><i class="fa fa-users"></i> User</a>
+                        <a href="Logout" class=" list-group-item  list-group-item-action  <?php if ($data['link'] == 'Logout'): ?> active <?php endif;?>"><i class="fa fa-sign-out-alt"></i> Logout</a>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="card rounded">
+                    <div class="card-body">
+                        <h3><i class="fa <?php echo $data['icon']; ?>"></i>
+                            <?php echo $data['judul']; ?>
+                        </h3>
+                        <hr>
+                        <?php include 'Pages/' . $data['path'] . ".php";?>
+                    </div>
                 </div>
             </div>
             <?php else: ?>
-            <div class="col-7 mx-auto">
-                <div class="card mb-3 rounded">
-                    <div class="row no-gutters">
-                        <div class="col-md-5" style="background: url('mine/bg/7.jpg') ">
-                        </div>
-                        <div class="col-md-7">
-                            <div class="card-body">
-                                <h5 class="card-title">Login ke sistem</h5>
-                                <div class="auto-form-wrapper">
-                                    <form action="Login" role="form" method="post" enctype="multipart/form-data">
-                                        <div class="form-group">
-                                            <label class="label">Username</label>
-                                            <div class="input-group">
-                                                <input type="text" name="user" autocomplete="off" required="" class="form-control" placeholder="Username">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">
-                                                        <i class="fa fa-user"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="label">Password</label>
-                                            <div class="input-group">
-                                                <input type="password" name="pass" autocomplete="off" required="" class="form-control" placeholder="*********">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">
-                                                        <i class="fa fa-key"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                         <div class="form-group">
-                                            <label class="label">Periode</label>
-                                            <div class="input-group">
-                                                <input type="number" name="tahun" autocomplete="off" required="" class="form-control" placeholder="2020">
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text">
-                                                        <i class="fa fa-calendar-alt"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <button type="submit" name="login" value="1" class="btn btn-primary submit-btn btn-block">Login</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php include 'Pages/' . $data['path'] . ".php";?>
             <?php endif;?>
         </div>
     </div>
-
     <!-- /#wrapper -->
     <!-- Bootstrap core JavaScript -->
     <?php include 'js.php';?>
-    <!-- Menu Toggle Script -->
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    </script>
     <script type="text/javascript">
     $(function() {
         $('[data-toggle="tooltip"]').tooltip()
     })
     </script>
+    <script type="text/javascript">
+        <?php if ($data['link'] == 'Home'): ?>
+             mapboxgl.accessToken = 'pk.eyJ1Ijoibmt1cm5pYTEwMzEiLCJhIjoiY2szMnNmdTJ2MGVvZDNnb2J5M2FwZmUxYiJ9.NQOOv2ivABH_v75lSXZr2A';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [101.44405879883004, 1.6636221106046492], // starting position
+        //center: [-97.547760, 35.486067],
+        zoom: 12 // starting zoom
+    });
+    map.addControl(new mapboxgl.NavigationControl());
+
+        <?php endif;?>
+    </script>
+    <?php if ($data['link'] == 'Panti'): ?>
+    <script>
+    mapboxgl.accessToken = 'pk.eyJ1Ijoibmt1cm5pYTEwMzEiLCJhIjoiY2szMnNmdTJ2MGVvZDNnb2J5M2FwZmUxYiJ9.NQOOv2ivABH_v75lSXZr2A';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [101.44405879883004, 1.6636221106046492], // starting position
+        //center: [-97.547760, 35.486067],
+        zoom: 12 // starting zoom
+    });
+    map.addControl(new mapboxgl.NavigationControl());
+    var marker = new mapboxgl.Marker().setLngLat([101.43299154343026, 1.6833998712072002])
+        .addTo(map);
+    map.getCanvas().style.cursor = 'pointer';
+
+
+
+    map.on('click', function(e) {
+        koor = e.lngLat.toArray();
+        //console.log(e);
+        marker.setLngLat(koor).addTo(map);
+        $('#koor').val(`[${koor[0]},${koor[1]}]`);
+        $('#koor2').val(`[${koor[0]},${koor[1]}]`);
+    });
+    </script>
+    <?php endif;?>
     <script type="text/javascript">
     var aneh;
     $(document).ready(function() {
@@ -135,6 +123,14 @@
                 }
             }
         });
+        <?php if ($data['link'] == 'Panti'): ?>
+        <?php if (isset($Request->key)): ?>
+        marker.setLngLat(<?php echo $data['key']->koordinat; ?>).addTo(map);
+        $('#koor').val(<?php echo $data['key']->koordinat; ?>);
+        $('#koor2').val(<?php echo $data['key']->koordinat; ?>);
+        <?php endif;?>
+        <?php endif;?>
+
 
     });
     </script>

@@ -10,58 +10,91 @@ use \Crud as Crud;
 
 class Admin
 {
-
-    public function Dinsos($Request, $Session)
+    public function Dashboard($Request, $Session)
     {
         $data = [
-            'judul' => 'Data Pengguna [Dinsos]',
-            'path' => 'Admin/Dinsos',
-            'link' => 'Dinsos',
+            'judul' => 'Dashboard',
+            'path' => 'Dashboard',
+            'link' => 'Dashboard',
+            'icon' => 'fa-home',
+
+            'warna' => 'primary',
 
         ];
-        //Fungsi::fields('pengguna', new Crud);
+
+        return $data;
+    }
+    public function Panti($Request, $Session)
+    {
+        $data = [
+            'judul' => 'Data Panti',
+            'path' => 'Admin/Panti',
+            'link' => 'Panti',
+            'icon' => 'fa-place-of-worship',
+
+        ];
+        //Fungsi::fields('panti', new Crud);
         $fields1 = '[
-                {"name":"nama","label":"Nama Lengkap","type":"text","max":"25","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true},
-                {"name":"nohp","label":"No HP","type":"text","max":"12","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true},
-                {"name":"username","label":"Username","type":"text","max":"15","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true},
-                {"name":"password","label":"Password","type":"password","max":"15","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true}
+                {"name":"nama","label":"Nama Panti","type":"text","max":"50","pnj":12,"val":null,"red":"required","input":true,"up":true,"tb":true},
+                {"name":"lakilaki","label":"Anak Laki-Laki","type":"number","max":"50","pnj":12,"val":null,"red":"required","input":true,"up":true,"tb":true},
+                {"name":"perempuan","label":"Anak Perempuan","type":"number","max":"50","pnj":12,"val":null,"red":"required","input":true,"up":true,"tb":true},
+                {"name":"visi","label":"Visi","type":"textarea","max":"65535","pnj":6,"val":null,"red":"required","input":true,"up":true,"tb":true},
+                {"name":"misi","label":"Misi","type":"textarea","max":"65535","pnj":6,"val":null,"red":"required","input":true,"up":true,"tb":true},
+                {"name":"alamat","label":"Alamat lengkap","type":"text","max":"100","pnj":6,"val":null,"red":"required","input":true,"up":true,"tb":true},
+                {"name":"link","label":"Link Website","type":"text","max":"50","pnj":6,"val":null,"red":"","input":true,"up":true,"tb":true},
+                {"name":"idkecamatan","label":"Kecamatan","type":"number","max":null,"pnj":12,"val":null,"red":"required","input":true,"up":true,"tb":true}
                 ]';
         $data['form'] = json_decode($fields1, true);
-        $data['data'] = collect(Crud::table('pengguna')->select()->where('jenis', 'Dinsos')->get());
+        $data['data'] = collect(Crud::table('panti')->select()->get());
+        $data['kecamatan'] = collect(Crud::table('kecamatan')->select()->get());
         if (isset($Request->key)) {
-            $data['key'] = $data['data']->where('idpengguna', $Request->key)->first();
+            $data['foto'] = collect(Crud::table('foto')->select()->where('idpanti', $Request->key)->get());
+            $data['cp'] = collect(Crud::table('cp')->select()->where('idcp', $Request->key)->get());
+
+            $data['key'] = $data['data']->where('idpanti', $Request->key)->first();
             foreach ($data['form'] as $v => $k) {
                 $b = $k['name'];
                 $data['form'][$v]['val'] = $data['key']->$b;
             }
+            $data['foto.key']['desk'] = null;
+
+            if (isset($Request->idfoto)) {
+                $data['foto.key']['desk'] = $data['foto']->where('idfoto', $Request->idfoto)->first()->desk;
+            }
+            $data['cp.key']['nama'] = null;
+            $data['cp.key']['nohp'] = null;
+            $data['cp.key']['jabatan'] = null;
+            if (isset($Request->idcp)) {
+                $data['cp.key']['nama'] = $data['foto']->where('idcp', $Request->idcp)->first()->nama;
+                $data['cp.key']['nohp'] = $data['foto']->where('idcp', $Request->idcp)->first()->nohp;
+                $data['cp.key']['jabatan'] = $data['foto']->where('idcp', $Request->idcp)->first()->jabatan;
+
+            }
+
         }
 
         return $data;
     }
-    public function Kelurahan($Request, $Session)
+
+    public function User($Request, $Session)
     {
         $data = [
-            'judul' => 'Data Pengguna [Kelurahan]',
-            'path' => 'Admin/Kelurahan',
-            'link' => 'Kelurahan',
+            'judul' => 'Data User',
+            'path' => 'Admin/User',
+            'link' => 'User',
+            'icon' => 'fa-users',
 
         ];
-        //Fungsi::fields('pengguna', new Crud);
+        //Fungsi::fields('user', new Crud);
         $fields1 = '[
-                {"name":"nama","label":"Nama Lengkap","type":"text","max":"25","pnj":12,"val":null,"red":"required","input":true,"up":true,"tb":true},
-                {"name":"nohp","label":"No HP","type":"text","max":"12","pnj":12,"val":null,"red":"required","input":true,"up":true,"tb":true},
-                {"name":"kecamatan","label":"Kecamatan","type":"text","max":"12","pnj":12,"val":null,"red":"required","input":false,"up":true,"tb":true},
-
-                {"name":"kelurahan","label":"Kelurahan","type":"text","max":"12","pnj":12,"val":null,"red":"required","input":true,"up":true,"tb":true},
                 {"name":"username","label":"Username","type":"text","max":"15","pnj":12,"val":null,"red":"required","input":true,"up":true,"tb":true},
-                {"name":"password","label":"Password","type":"password","max":"15","pnj":12,"val":null,"red":"required","input":true,"up":true,"tb":true}
+                {"name":"password","label":"Password","type":"password","max":"15","pnj":12,"val":null,"red":"required","input":true,"up":true,"tb":true},
+                {"name":"nama","label":"Nama Lengkap","type":"text","max":"25","pnj":12,"val":null,"red":"required","input":true,"up":true,"tb":true}
                 ]';
         $data['form'] = json_decode($fields1, true);
-        $data['data'] = collect(Crud::table('pengguna')->select()->where('jenis', 'Kelurahan')->get());
-        $string = file_get_contents("kelurahan.json");
-        $data['kelurahan'] = json_decode($string)->kecamatan;
+        $data['data'] = collect(Crud::table('user')->select()->get());
         if (isset($Request->key)) {
-            $data['key'] = $data['data']->where('idpengguna', $Request->key)->first();
+            $data['key'] = $data['data']->where('username', $Request->key)->first();
             foreach ($data['form'] as $v => $k) {
                 $b = $k['name'];
                 $data['form'][$v]['val'] = $data['key']->$b;
@@ -70,6 +103,33 @@ class Admin
 
         return $data;
     }
+    public function Kecamatan($Request, $Session)
+    {
+        $data = [
+            'judul' => 'Data Kecamatan',
+            'path' => 'Admin/Kecamatan',
+            'link' => 'Kecamatan',
+            'icon' => 'fa-map-signs',
+
+        ];
+        //Fungsi::fields('kecamatan', new Crud);
+        $fields1 = '[
+                {"name":"kecamatan","label":"Kecamatan","type":"text","max":"30","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true},
+                {"name":"kodepos","label":"Kode Pos","type":"text","max":"6","pnj":12,"val":null,"red":"","input":true,"up":true,"tb":true}
+                ]';
+        $data['form'] = json_decode($fields1, true);
+        $data['data'] = collect(Crud::table('kecamatan')->select()->get());
+        if (isset($Request->key)) {
+            $data['key'] = $data['data']->where('idkecamatan', $Request->key)->first();
+            foreach ($data['form'] as $v => $k) {
+                $b = $k['name'];
+                $data['form'][$v]['val'] = $data['key']->$b;
+            }
+        }
+
+        return $data;
+    }
+
     public function Pengaturan($Request, $Session)
     {
         $data = [
