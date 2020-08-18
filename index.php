@@ -30,8 +30,8 @@ $hal = $hal[0];
 if ($hal == '') {
     echo "<script>location.href = 'Home';</script>";
 }
-$free = ['Login', 'Logout', 'Home'];
-$admin = ['User'];
+$free = ['Login', 'Logout', 'Home', 'Proses', 'Website'];
+$admin = ['User', 'Panti'];
 
 if (!in_array($hal, $free)) {
 
@@ -49,6 +49,9 @@ $route = [
     'User' => ['class' => "app\Admin", '@' => 'User'],
     'Kecamatan' => ['class' => "app\Admin", '@' => 'Kecamatan'],
     'Panti' => ['class' => "app\Admin", '@' => 'Panti'],
+    'Proses' => ['class' => "app\Standalone", '@' => 'Proses'],
+    'Website' => ['class' => "app\Standalone", '@' => 'Website'],
+    'Metode' => ['class' => "app\Standalone", '@' => 'Metode'],
 
 ];
 

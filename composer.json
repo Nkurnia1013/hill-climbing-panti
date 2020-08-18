@@ -6,6 +6,7 @@
     "require":
     {
         "tightenco/collect": "^7.12.0.0",
-        "clancats/hydrahon": "^1.1"
+        "clancats/hydrahon": "^1.1",
+        "drupol/phpermutations": "^1.4"
     }
 }

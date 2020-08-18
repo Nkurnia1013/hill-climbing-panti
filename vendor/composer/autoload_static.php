@@ -15,6 +15,11 @@ class ComposerStaticInit4668bbdf251a5042cff93adf88597cc4
     );
 
     public static $prefixLengthsPsr4 = array (
+        'd' => 
+        array (
+            'drupol\\phpermutations\\Tests\\' => 28,
+            'drupol\\phpermutations\\' => 22,
+        ),
         'T' => 
         array (
             'Tightenco\\Collect\\' => 18,
@@ -32,6 +37,14 @@ class ComposerStaticInit4668bbdf251a5042cff93adf88597cc4
     );
 
     public static $prefixDirsPsr4 = array (
+        'drupol\\phpermutations\\Tests\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/drupol/phpermutations/tests/src',
+        ),
+        'drupol\\phpermutations\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/drupol/phpermutations/src',
+        ),
         'Tightenco\\Collect\\' => 
         array (
             0 => __DIR__ . '/..' . '/tightenco/collect/src/Collect',

@@ -36,20 +36,38 @@ class Admin
         //Fungsi::fields('panti', new Crud);
         $fields1 = '[
                 {"name":"nama","label":"Nama Panti","type":"text","max":"50","pnj":12,"val":null,"red":"required","input":true,"up":true,"tb":true},
-                {"name":"lakilaki","label":"Anak Laki-Laki","type":"number","max":"50","pnj":12,"val":null,"red":"required","input":true,"up":true,"tb":true},
-                {"name":"perempuan","label":"Anak Perempuan","type":"number","max":"50","pnj":12,"val":null,"red":"required","input":true,"up":true,"tb":true},
+                {"name":"lakilaki","label":"Anak Laki-Laki","type":"number","max":"999999","pnj":6,"val":null,"red":"required","input":true,"up":true,"tb":true},
+                {"name":"perempuan","label":"Anak Perempuan","type":"number","max":"999999","pnj":6,"val":null,"red":"required","input":true,"up":true,"tb":true},
                 {"name":"visi","label":"Visi","type":"textarea","max":"65535","pnj":6,"val":null,"red":"required","input":true,"up":true,"tb":true},
                 {"name":"misi","label":"Misi","type":"textarea","max":"65535","pnj":6,"val":null,"red":"required","input":true,"up":true,"tb":true},
                 {"name":"alamat","label":"Alamat lengkap","type":"text","max":"100","pnj":6,"val":null,"red":"required","input":true,"up":true,"tb":true},
-                {"name":"link","label":"Link Website","type":"text","max":"50","pnj":6,"val":null,"red":"","input":true,"up":true,"tb":true},
-                {"name":"idkecamatan","label":"Kecamatan","type":"number","max":null,"pnj":12,"val":null,"red":"required","input":true,"up":true,"tb":true}
+                {"name":"link","label":"Link Website","type":"text","max":"50","pnj":6,"val":null,"red":"","input":true,"up":true,"tb":true}
                 ]';
         $data['form'] = json_decode($fields1, true);
+        $data['koordinat'] = null;
         $data['data'] = collect(Crud::table('panti')->select()->get());
-        $data['kecamatan'] = collect(Crud::table('kecamatan')->select()->get());
+        $place = [
+            "type" => "FeatureCollection",
+            "features" => array(),
+        ];
+        foreach ($data['data'] as $k) {
+            $x = [
+                "type" => "Feature",
+                "properties" => [
+                    "description" => ucfirst($k->nama),
+                    "icon" => "bicycle",
+                ],
+                "geometry" => [
+                    "type" => "Point",
+                    "coordinates" => explode(',', $k->koordinat),
+                ],
+            ];
+            array_push($place['features'], $x);
+        }
+        $data['place'] = json_encode($place);
         if (isset($Request->key)) {
             $data['foto'] = collect(Crud::table('foto')->select()->where('idpanti', $Request->key)->get());
-            $data['cp'] = collect(Crud::table('cp')->select()->where('idcp', $Request->key)->get());
+            $data['cp'] = collect(Crud::table('cp')->select()->where('idpanti', $Request->key)->get());
 
             $data['key'] = $data['data']->where('idpanti', $Request->key)->first();
             foreach ($data['form'] as $v => $k) {
@@ -57,6 +75,7 @@ class Admin
                 $data['form'][$v]['val'] = $data['key']->$b;
             }
             $data['foto.key']['desk'] = null;
+            $data['koordinat'] = $data['key']->koordinat;
 
             if (isset($Request->idfoto)) {
                 $data['foto.key']['desk'] = $data['foto']->where('idfoto', $Request->idfoto)->first()->desk;
@@ -65,9 +84,9 @@ class Admin
             $data['cp.key']['nohp'] = null;
             $data['cp.key']['jabatan'] = null;
             if (isset($Request->idcp)) {
-                $data['cp.key']['nama'] = $data['foto']->where('idcp', $Request->idcp)->first()->nama;
-                $data['cp.key']['nohp'] = $data['foto']->where('idcp', $Request->idcp)->first()->nohp;
-                $data['cp.key']['jabatan'] = $data['foto']->where('idcp', $Request->idcp)->first()->jabatan;
+                $data['cp.key']['nama'] = $data['cp']->where('idcp', $Request->idcp)->first()->nama;
+                $data['cp.key']['nohp'] = $data['cp']->where('idcp', $Request->idcp)->first()->nohp;
+                $data['cp.key']['jabatan'] = $data['cp']->where('idcp', $Request->idcp)->first()->jabatan;
 
             }
 

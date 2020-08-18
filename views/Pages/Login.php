@@ -29,6 +29,8 @@
 
                                 <div class="form-group">
                                     <button type="submit" name="login" value="1" class="btn btn-primary submit-btn btn-block">Login</button>
+                                    <a href="Home"  class="btn btn-primary submit-btn btn-block">Menu Utama</a>
+
                                 </div>
                             </form>
                         </div>

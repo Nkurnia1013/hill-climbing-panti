@@ -27,8 +27,8 @@
                                 <?php endforeach;?>
                                 <div class="form-grup col-6 mb-2 input-group-sm">
                                     <label>Titik Koordinat</label>
-                                    <input type="text" disabled="" id="koor" class="form-control" name="">
-                                    <input type="hidden" name="input[]" id="koor2">
+                                    <input type="text" disabled="" value="<?php echo $data['koordinat']; ?>" id="koor" class="form-control" name="">
+                                    <input type="hidden" name="input[]" value="<?php echo $data['koordinat']; ?>" id="koor2">
                                     <input type="hidden" name="tb[]" value="koordinat">
                                 </div>
                                 <div id='map' style="width: 100%;height: 500px;">
@@ -139,7 +139,7 @@
                                 <?php echo $k->nohp; ?>
                             </td>
                             <td class="text-right ">
-                                <a href="?key=<?php echo $k->idpanti; ?>&idfoto=<?php echo $k->cp; ?>" class="btn btn-warning btn-sm">Kelola</a>
+                                <a href="?key=<?php echo $k->idpanti; ?>&idcp=<?php echo $k->idcp; ?>" class="btn btn-warning btn-sm">Kelola</a>
                             </td>
                         </tr>
                         <?php endforeach;?>
